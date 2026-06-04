@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: url-shortener-server
+    runtime: node
+    rootDir: server
+    buildCommand: npm install --include=dev && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: PORT
+        value: 10000

@@ -1,9 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { connectToMongo } from "./db";
-import urlRoutes from "./routes/url";
-import Url from "./models/Url";
+import { connectToMongo } from "./db.js";
+import urlRoutes from "./routes/url.js";
+import Url from "./models/Url.js";
 
 dotenv.config();
 

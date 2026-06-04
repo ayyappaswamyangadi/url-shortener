@@ -1,6 +1,6 @@
 import Router from "express";
 import { nanoid } from "nanoid";
-import Url from "../models/Url";
+import Url from "../models/Url.js";
 
 const router = Router();
 

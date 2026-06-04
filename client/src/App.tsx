@@ -64,6 +64,18 @@ export default function App() {
       return;
     }
 
+    if (!/^https?:\/\//i.test(trimmed)) {
+      setError("URL must start with http:// or https://");
+      return;
+    }
+
+    try {
+      new URL(trimmed);
+    } catch {
+      setError("That doesn't look like a valid URL. Please check and try again.");
+      return;
+    }
+
     setLoading(true);
     try {
       const { data } = await axios.post<ShortenResult>(`${API}/shorten`, {
@@ -117,7 +129,7 @@ export default function App() {
 
       {/* Shorten Form */}
       <div className="card">
-        <form onSubmit={handleShorten}>
+        <form onSubmit={handleShorten} noValidate>
           <div className="form-row">
             <input
               className="url-input"

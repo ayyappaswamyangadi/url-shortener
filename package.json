@@ -1,0 +1,8 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "cd server && npm install --production=false && npm run build",
+    "start": "node server/dist/index.js"
+  }
+}

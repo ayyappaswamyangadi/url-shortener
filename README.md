@@ -75,6 +75,10 @@ Backend runs at `http://localhost:5000`
 
 ---
 
+## 🌐 Live Demo
+
+**[https://url-shortener-pi-mauve.vercel.app/](https://url-shortener-pi-mauve.vercel.app/)**
+
 ## 🌐 Deployment
 
 - **Frontend**: Vercel

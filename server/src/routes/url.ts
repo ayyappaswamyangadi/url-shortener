@@ -23,14 +23,17 @@ router.post("/shorten", async (request, response) => {
   }
 
   try {
-    // Return existing short URL if already shortened
+    // Reject if this original URL has already been shortened
     const existing = await Url.findOne({ originalUrl });
     if (existing) {
-      return response.json({
-        shortUrl: `${BASE_URL}/${existing.shortId}`,
-        shortId: existing.shortId,
-        clicks: existing.clicks,
-        createdAt: existing.createdAt,
+      return response.status(409).json({
+        error: "This URL has already been shortened.",
+        existing: {
+          shortUrl: `${BASE_URL}/${existing.shortId}`,
+          shortId: existing.shortId,
+          clicks: existing.clicks,
+          createdAt: existing.createdAt,
+        },
       });
     }
 

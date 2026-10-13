@@ -414,13 +414,22 @@ export default function App() {
           </div>
         ) : (
           <table className="url-table">
+            <colgroup>
+              <col className="col-short" />
+              <col className="col-original" />
+              <col className="col-clicks" />
+              <col className="col-date" />
+              <col className="col-actions" />
+            </colgroup>
             <thead>
               <tr>
                 <th>Short URL</th>
                 <th>Original</th>
                 <th>Clicks</th>
                 <th>Created</th>
-                <th></th>
+                <th>
+                  <span className="sr-only">Actions</span>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -432,6 +441,7 @@ export default function App() {
                       href={entry.shortUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      title={entry.shortUrl}
                     >
                       {entry.shortUrl.replace(/^https?:\/\//, "")}
                     </a>
@@ -453,7 +463,7 @@ export default function App() {
                   <td data-label="Created">
                     <span className="date-text">{formatDate(entry.createdAt)}</span>
                   </td>
-                  <td>
+                  <td className="actions-cell">
                     <button
                       className="btn btn-danger"
                       onClick={() => handleDelete(entry.shortId)}

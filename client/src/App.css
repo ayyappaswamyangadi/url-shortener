@@ -6,6 +6,7 @@
 }
 
 #root {
+  width: 100%;
   max-width: 780px;
   margin: 0 auto;
   padding: 2.5rem 1.5rem 5rem;
@@ -54,6 +55,7 @@
 
 /* ── Card ─────────────────────────────────────────────────────────────────── */
 .card {
+  min-width: 0;
   background: #1a1a1a;
   border: 1px solid #2a2a2a;
   border-radius: 14px;
@@ -69,6 +71,7 @@
 
 .url-input {
   flex: 1;
+  min-width: 0;
   padding: 0.75rem 1rem;
   font-size: 0.97rem;
   font-family: inherit;
@@ -149,6 +152,7 @@
   border-radius: 8px;
   color: #fca5a5;
   font-size: 0.88rem;
+  overflow-wrap: anywhere;
   animation: fadeSlideIn 0.2s ease-out;
 }
 
@@ -175,6 +179,7 @@
 }
 
 .result-info {
+  flex: 1 1 200px;
   min-width: 0;
 }
 
@@ -350,7 +355,22 @@
 .url-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
   font-size: 0.9rem;
+}
+
+.col-short    { width: 32%; }
+.col-clicks   { width: 4.5rem; }
+.col-date     { width: 7.5rem; }
+.col-actions  { width: 5.5rem; }
+
+.url-table th:nth-child(3),
+.url-table td:nth-child(3) {
+  text-align: center;
+}
+
+.actions-cell {
+  text-align: right;
 }
 
 .url-table th {
@@ -385,6 +405,10 @@
 .short-link {
   color: #818cf8;
   font-weight: 500;
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -395,7 +419,7 @@
 
 .original-url {
   color: #666;
-  max-width: 240px;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -420,6 +444,15 @@
 .date-text {
   color: #444;
   font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
   white-space: nowrap;
 }
 
@@ -490,6 +523,8 @@
 
 .toast-message {
   flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
   line-height: 1.4;
 }
 
@@ -568,6 +603,7 @@
 }
 
 .modal-desc code {
+  word-break: break-all;
   font-family: ui-monospace, monospace;
   color: #a5b4fc;
   background: rgba(100, 108, 255, 0.1);
@@ -648,80 +684,10 @@
   to   { opacity: 1; transform: scale(1); }
 }
 
-/* ── Mobile ───────────────────────────────────────────────────────────────── */
-@media (max-width: 540px) {
-  #root {
-    padding: 1.4rem 0.9rem 3.5rem;
-  }
-
-  .header-icon-wrap {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-  }
-
-  .header-icon-wrap svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  .header h1 {
-    font-size: 1.75rem;
-  }
-
-  .header p {
-    font-size: 0.9rem;
-  }
-
-  .card {
-    padding: 1.1rem;
-    border-radius: 10px;
-  }
-
-  .form-row {
-    flex-direction: column;
-  }
-
-  .btn-primary {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .section-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .search-wrap {
-    width: 100%;
-  }
-
-  .search-input {
-    width: 100%;
-  }
-
-  .toast-container {
-    bottom: 1rem;
-    right: 1rem;
-    left: 1rem;
-  }
-
-  .toast {
-    max-width: 100%;
-  }
-
-  .modal-actions {
-    flex-direction: column-reverse;
-  }
-
-  .btn-ghost,
-  .btn-danger-solid {
-    width: 100%;
-    justify-content: center;
-  }
-
-  /* Table → stacked cards */
-  .url-table thead {
+/* ── Tablet & below: table → stacked cards ────────────────────────────────── */
+@media (max-width: 640px) {
+  .url-table thead,
+  .url-table colgroup {
     display: none;
   }
 
@@ -748,12 +714,15 @@
     background: transparent;
   }
 
-  .url-table td {
+  .url-table td,
+  .url-table td:nth-child(3) {
     padding: 0.3rem 0;
     border-bottom: none;
     display: flex;
     align-items: center;
     gap: 0.6rem;
+    min-width: 0;
+    text-align: left;
   }
 
   .url-table td::before {
@@ -763,23 +732,151 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     font-weight: 500;
-    min-width: 56px;
+    width: 64px;
     flex-shrink: 0;
   }
 
-  .url-table td:last-child {
+  .url-table td > a {
+    flex: 1;
+  }
+
+  .url-table td.actions-cell {
     justify-content: flex-end;
     margin-top: 0.4rem;
-    padding-top: 0.5rem;
+    padding-top: 0.6rem;
     border-top: 1px solid #252525;
   }
 
-  .url-table td:last-child::before {
+  .url-table td.actions-cell::before {
     display: none;
   }
 
-  .original-url {
+  .btn-danger {
+    padding: 0.5rem 1rem;
+    min-height: 36px;
+  }
+}
+
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width: 540px) {
+  #root {
+    padding: 1.4rem 0.9rem 3.5rem;
+  }
+
+  .header {
+    margin-bottom: 1.75rem;
+  }
+
+  .header-icon-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+  }
+
+  .header-icon-wrap svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .header h1 {
+    font-size: 1.75rem;
+  }
+
+  .header p {
+    font-size: 0.9rem;
+  }
+
+  .card {
+    padding: 1.1rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  /* 16px prevents iOS Safari from zooming in on focus */
+  .url-input,
+  .search-input {
+    font-size: 16px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .result-box {
+    padding: 0.9rem 1rem;
+  }
+
+  .copy-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.6rem 1rem;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+
+  .search-wrap {
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .toast-container {
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+  }
+
+  .toast {
+    min-width: 0;
     max-width: 100%;
+  }
+
+  .modal {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .btn-ghost,
+  .btn-danger-solid {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 360px) {
+  #root {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .card {
+    padding: 0.85rem;
+  }
+
+  .url-table tr {
+    padding: 0.6rem 0.7rem;
+  }
+
+  .url-table td::before {
+    width: 56px;
   }
 }
 
@@ -885,8 +982,8 @@
   }
 }
 
-@media (prefers-color-scheme: light) and (max-width: 540px) {
+@media (prefers-color-scheme: light) and (max-width: 640px) {
   .url-table tr       { border-color: #e4e4e7; }
-  .url-table td:last-child { border-top-color: #e4e4e7; }
+  .url-table td.actions-cell { border-top-color: #e4e4e7; }
   .url-table td::before    { color: #a1a1aa; }
 }
